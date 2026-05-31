@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+:root {
+  --background: #7a110d;
+  --foreground: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-oswald);
+  --font-mono: var(--font-geist-mono);
+  --color-brand: #7a110d;
+  --color-brand-dark: #5c0d0a;
+  --color-brand-light: #fdf3e8;
+  --color-accent: #f2dbbb;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-oswald), sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input, select, textarea, option {
+  color: #1e293b;
+}
+
+@keyframes splash-spin {
+  0%   { transform: rotate(0deg) scale(0.7); opacity: 0; }
+  15%  { transform: rotate(162deg) scale(1); opacity: 1; }
+  100% { transform: rotate(1080deg) scale(1); opacity: 1; }
+}
+
+@keyframes login-success-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
