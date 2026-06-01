@@ -29,8 +29,8 @@ input, select, textarea, option {
 
 @keyframes splash-spin {
   0%   { transform: rotate(0deg) scale(0.7); opacity: 0; }
-  15%  { transform: rotate(162deg) scale(1); opacity: 1; }
-  100% { transform: rotate(1080deg) scale(1); opacity: 1; }
+  20%  { transform: rotate(72deg) scale(1); opacity: 1; }
+  100% { transform: rotate(360deg) scale(1); opacity: 1; }
 }
 
 @keyframes login-success-spin {

@@ -16,8 +16,8 @@ export default function SplashScreen() {
       localStorage.setItem('splash_last_shown', String(now))
       setVisible(true)
 
-      const fadeTimer = setTimeout(() => setFading(true), 2800)
-      const hideTimer = setTimeout(() => setVisible(false), 3500)
+      const fadeTimer = setTimeout(() => setFading(true), 600)
+      const hideTimer = setTimeout(() => setVisible(false), 1000)
 
       return () => {
         clearTimeout(fadeTimer)
@@ -48,7 +48,7 @@ export default function SplashScreen() {
           flexDirection: 'column',
           alignItems: 'center',
           gap: '24px',
-          animation: 'splash-spin 2.2s ease-out forwards',
+          animation: 'splash-spin 0.6s ease-out forwards',
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}

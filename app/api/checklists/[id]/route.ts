@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyRequest } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
+import { sendSectionCompletedEmail } from '@/lib/email'
+import { getActiveAreas } from '@/lib/area-definitions-db'
 
 export async function GET(
   request: NextRequest,
@@ -42,10 +44,21 @@ export async function PATCH(
     .from('checklists')
     .update(update)
     .eq('id', id)
-    .select()
+    .select('*, users(name)')
     .single()
 
   if (error) return NextResponse.json({ error: 'Error al actualizar' }, { status: 500 })
+
+  if (body.status === 'completed') {
+    const areas = await getActiveAreas()
+    const areaLabel = areas.find((a) => a.area_key === data.area_id)?.label ?? data.area_id
+    const userName = (data as Record<string, unknown> & { users?: { name: string } | null }).users?.name ?? 'Empleado'
+    sendSectionCompletedEmail({
+      areaLabel,
+      userName,
+      completedAt: data.completed_at ?? new Date().toISOString(),
+    }).catch(() => {})
+  }
 
   return NextResponse.json(data)
 }

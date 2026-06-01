@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, Users, ClipboardList, Settings2, ShieldCheck } from 'lucide-react'
+import { LayoutDashboard, Users, ClipboardList, Settings2, ShieldCheck, SlidersHorizontal } from 'lucide-react'
 
 const links = [
   { href: '/admin', label: 'Panel', icon: LayoutDashboard, exact: true },
@@ -10,6 +10,7 @@ const links = [
   { href: '/admin/historial', label: 'Historial', icon: ClipboardList },
   { href: '/admin/secciones', label: 'Secciones', icon: Settings2 },
   { href: '/admin/roles', label: 'Roles', icon: ShieldCheck },
+  { href: '/admin/configuracion', label: 'Config.', icon: SlidersHorizontal },
 ]
 
 export function SidebarNav() {
@@ -47,12 +48,12 @@ export function BottomNav() {
           <Link
             key={href}
             href={href}
-            className={`flex-1 flex flex-col items-center gap-1 py-3 text-xs uppercase tracking-widest font-semibold transition-colors ${
-              active ? 'text-white' : 'text-white/50 hover:text-white'
+            aria-label={label}
+            className={`flex-1 flex items-center justify-center py-3.5 transition-colors ${
+              active ? 'text-white' : 'text-white/40 hover:text-white'
             }`}
           >
-            <Icon size={18} strokeWidth={active ? 2.5 : 1.5} />
-            {label}
+            <Icon size={20} strokeWidth={active ? 2.5 : 1.5} />
           </Link>
         )
       })}
