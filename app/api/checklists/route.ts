@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyRequest } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
-import { ROLE_AREAS } from '@/lib/checklist-definitions'
+import { getAreaKeysByRole } from '@/lib/area-definitions-db'
 
 export async function GET(request: NextRequest) {
   const session = await verifyRequest(request)
@@ -10,13 +10,13 @@ export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl
   const date = searchParams.get('date') ?? new Date().toISOString().split('T')[0]
 
-  const areas = ROLE_AREAS[session.role] ?? []
+  const areas = await getAreaKeysByRole(session.role)
 
   const { data, error } = await supabase
     .from('checklists')
     .select('*, checklist_items(*), users(name)')
     .eq('date', date)
-    .in('area_id', areas)
+    .in('area_id', areas.length > 0 ? areas : ['__none__'])
 
   if (error) return NextResponse.json({ error: 'Error del servidor' }, { status: 500 })
 

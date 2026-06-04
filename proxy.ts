@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { jwtVerify } from 'jose'
 import type { SessionPayload } from '@/lib/types'
-import { ROLE_AREAS } from '@/lib/checklist-definitions'
 
 const getSecret = () => new TextEncoder().encode(process.env.JWT_SECRET!)
 
@@ -45,15 +44,10 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
-  // Verificar acceso por área en /checklist/[areaId]
-  const checklistMatch = pathname.match(/^\/checklist\/([^/]+)/)
-  if (checklistMatch) {
-    const areaId = checklistMatch[1]
-    const allowed = ROLE_AREAS[role] ?? []
-    if (!allowed.includes(areaId)) {
-      return NextResponse.redirect(new URL('/dashboard', request.url))
-    }
-  }
+  // El acceso por área en /checklist/[areaId] lo maneja el server component
+  // con una consulta dinámica a la BD (getAreaForRole en area-definitions-db.ts).
+  // No se usa ROLE_AREAS aquí porque esa lista es hardcodeada y no incluye
+  // secciones creadas dinámicamente por el admin.
 
   return NextResponse.next()
 }

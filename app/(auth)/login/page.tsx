@@ -13,7 +13,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (!success) return
-    const t = setTimeout(() => router.push(successDest), 5000)
+    const t = setTimeout(() => router.push(successDest), 1500)
     return () => clearTimeout(t)
   }, [success, successDest, router])
 
@@ -57,7 +57,7 @@ export default function LoginPage() {
           <img
             src="/logo_transparente.png"
             alt="Innamoratti"
-            style={{ width: '240px', height: 'auto', animation: 'login-success-spin 1.2s linear infinite' }}
+            style={{ width: '240px', height: 'auto', animation: 'login-success-spin 0.7s linear infinite' }}
           />
         </div>
       )}
